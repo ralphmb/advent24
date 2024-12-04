@@ -50,3 +50,7 @@ rsconnect/
 
 # DS_Store
 .DS_Store
+
+# Advent specific
+**/input.txt
+**/test.txt

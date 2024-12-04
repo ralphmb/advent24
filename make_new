@@ -7,6 +7,8 @@ read day_num
 newname="day"$day_num
 echo "Creating "$newname
 cp -R ./template ./$newname
+touch "./"$newname"/test.txt"
+touch "./"$newname"/input.txt"
 
 open -a /Applications/Chromium.app  "https://adventofcode.com/2024/day/"$day_num
 open -a /Applications/RStudio.app "./"$newname"/test.txt"
