@@ -6,9 +6,6 @@ rm(list = ls())
 setwd(dirname(rstudioapi::documentPath()))
 source("../init.R")
 
-# inp <- read_lines("./test.txt")
-inp <- read_lines("./input.txt")
-
 ################################################################################
 ################################# -- Part 1 -- #################################
 ################################################################################
@@ -42,11 +39,7 @@ iter_diag <- function(M) {
   list(indices = indices, count = counter)
 }
 
-mat <- inp %>% 
-  mutate(lines = lapply(lines, split_full)) %>%
-  pull(lines) %>%
-  do.call(rbind, .)
-
+mat <- read_to_matrix("./test.txt")
 
 w <- ncol(mat)
 
@@ -78,19 +71,12 @@ iterr <- function(M) {
   list(indices = indices, count = counter)
 }
 
-mat <- inp %>% 
-  mutate(lines = lapply(lines, split_full)) %>%
-  pull(lines) %>%
-  do.call(rbind, .)
-
+mat <- read_to_matrix("./input.txt")
 
 w <- ncol(mat)
 
 mats <- list(mat ,t(mat), mat[,w:1], t(mat[w:1,w:1]))
-
 results1 <- lapply(mats, iterr)
-
 ans <- sum(map_dbl(results1, ~ .x[[2]]))
 
 print(ans)
-
