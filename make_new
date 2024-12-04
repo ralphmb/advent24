@@ -1,16 +1,49 @@
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 cd $SCRIPT_DIR
 
-echo "Day Number? >"
-read day_num
+month=$(date | awk '{print $3}')
 
-newname="day"$day_num
-echo "Creating "$newname
-cp -R ./template ./$newname
-touch "./"$newname"/test.txt"
-touch "./"$newname"/input.txt"
+if [[ "$month" == "Dec" ]]
+then
+	day_num=$(date | awk '{print $2}')
+	echo "Today is the "$day_num"th"
+	echo "Create a directory for day "$day_num"? (y/n) :> "
+	read auto_choice
+	if [[ "$auto_choice" = "y" ]]
+	then
+		newname="day"$day_num
+		echo "Creating "$newname
+		cp -R ./template ./$newname
+		touch "./"$newname"/test.txt"
+		touch "./"$newname"/input.txt"
+		
+		open -a /Applications/Chromium.app "https://adventofcode.com/2024/day/"$day_num
+		open -a /Applications/RStudio.app "./"$newname"/test.txt"
+		open -a /Applications/RStudio.app "./"$newname"/input.txt"
+		open -a /Applications/RStudio.app "./"$newname"/script.R"
+		echo "Exiting, bye!"
+		exit 0
+	fi
+fi
 
-open -a /Applications/Chromium.app  "https://adventofcode.com/2024/day/"$day_num
-open -a /Applications/RStudio.app "./"$newname"/test.txt"
-open -a /Applications/RStudio.app "./"$newname"/input.txt"
-open -a /Applications/RStudio.app "./"$newname"/script.R"
+echo "Want to choose a date? (y/n) :> "
+read manual_choice
+
+if [[ "$manual_choice" = "y" ]]
+then
+	echo "Enter a day :> "
+	read day_num
+	newname="day"$day_num
+	echo "Creating "$newname
+	cp -R ./template ./$newname
+	touch "./"$newname"/test.txt"
+	touch "./"$newname"/input.txt"
+	
+	open -a /Applications/Chromium.app "https://adventofcode.com/2024/day/"$day_num
+	open -a /Applications/RStudio.app "./"$newname"/test.txt"
+	open -a /Applications/RStudio.app "./"$newname"/input.txt"
+	open -a /Applications/RStudio.app "./"$newname"/script.R"
+fi
+
+echo "Bye!"
+exit 0
