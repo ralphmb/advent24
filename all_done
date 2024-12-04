@@ -1,0 +1,32 @@
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+cd $SCRIPT_DIR
+
+git add .
+git status
+echo "Want to commit? (y/n) :> "
+read git_choice
+if [[ "$git_choice" = "y" ]]
+then 
+	echo "Enter commit message :> "
+	read commit_message
+	echo "Happy with this message? (y/n) :>"
+	read happy_choice
+	
+	if [[ "$happy_choice" = "y" ]]
+	then
+		git commit -m $commit_message
+		git push -u origin main
+	else
+		echo "Not committing"
+	fi
+else
+	echo "Not committing"
+fi
+
+echo "Open the reddit? (y/n) :> "
+read reddit_choice
+
+if [[ "$reddit_choice" = "y" ]]
+then
+	open -a /Applications/Chromium.app https://old.reddit.com/r/adventofcode
+fi
