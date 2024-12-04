@@ -3,30 +3,43 @@ cd $SCRIPT_DIR
 
 git add .
 git status
+echo ""
 echo "Want to commit? (y/n) :> "
 read git_choice
+echo ""
 if [[ "$git_choice" = "y" ]]
 then 
 	echo "Enter commit message :> "
 	read commit_message
+	echo ""
+	echo $commit_message
+	echo ""
 	echo "Happy with this message? (y/n) :>"
 	read happy_choice
-	
+	echo ""
 	if [[ "$happy_choice" = "y" ]]
 	then
 		git commit -m $commit_message
 		git push -u origin main
 	else
+		echo ""
 		echo "Not committing"
+		echo ""
 	fi
 else
+	echo ""
 	echo "Not committing"
+	echo ""
 fi
-
+echo ""
+echo ""
 echo "Open the reddit? (y/n) :> "
 read reddit_choice
-
+echo ""
 if [[ "$reddit_choice" = "y" ]]
 then
 	open -a /Applications/Chromium.app https://old.reddit.com/r/adventofcode
 fi
+echo ""
+echo "All done, bye"
+echo ""
