@@ -9,6 +9,6 @@ Scripts are zsh and assume you're on MacOS with Rstudio and Chromium installed.
 
 ## TODO:
 
--   [ ] Add calendar day detection to `make_new`
+-   [x] Add calendar day detection to `make_new`
 -   [ ] Cronjob to download the input and instructions automatically (lol)
 -   [ ] Validate day number input in make_new
