@@ -6,8 +6,8 @@ rm(list = ls())
 setwd(dirname(rstudioapi::documentPath()))
 source("../init.R")
 
-inp <- read_lines("./test.txt")
-#inp <- read_lines("./input.txt")
+#inp <- read_lines("./test.txt")
+inp <- read_lines("./input.txt")
 
 ################################################################################
 ################################# -- Part 1 -- #################################
@@ -70,7 +70,6 @@ check_ops <- function(target, curr, nums) {
       check_ops(target, num_concat(curr, nums[1]), nums[2:l])
   }
 }
-
 result <- inp %>%
   mutate(s = strsplit(lines, split = ":")) %>%
   rowwise() %>%
@@ -82,5 +81,4 @@ result <- inp %>%
   filter(check) %>%
   pull(target) %>%
   sum()
-result
-
+print(result)
