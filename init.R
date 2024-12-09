@@ -3,8 +3,9 @@ library(stringr)
 library(tidyr)
 library(purrr)
 
-read_lines <- function(path = "./input.txt") {
-  read.delim(path, header = FALSE) %>%
+read_lines <- function(path = "./input.txt", skip_blank = FALSE) {
+  read.delim(path, header = FALSE, blank.lines.skip = skip_blank,
+             numerals = "no.loss") %>%
     rename(lines = V1)
 }
 
@@ -28,5 +29,6 @@ m_get <- function(M, i, j, default = 0) {
 }
 
 split_full <- function(s) {
+  s <- as.character(s)
   strsplit(s, split = "")[[1]]
 }
