@@ -19,7 +19,7 @@ then
 	echo ""
 	if [[ "$happy_choice" = "y" ]]
 	then
-		git commit -m $commit_message
+		git commit -m "$commit_message"
 		git push -u origin main
 	else
 		echo ""
