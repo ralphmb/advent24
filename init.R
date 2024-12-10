@@ -5,21 +5,28 @@ library(purrr)
 
 options(digits = 16)
 
+################################################################################
+############################### READING FUNCTIONS ##############################
+################################################################################
 
-read_lines <- function(path = "./input.txt", skip_blank = FALSE, skip_blank = FALSE) {
-  read.delim(path, header = FALSE, blank.lines.skip = skip_blank, blank.lines.skip = skip_blank,
-             numerals = "no.loss") %>%
+read_lines <- function(path = "./input.txt", skip_blank = FALSE) {
+  read.delim(path, header = FALSE, blank.lines.skip = skip_blank,
+             colClasses = "character") %>%
     rename(lines = V1)
 }
 
-read_to_matrix <- function(path = "./input.txt", type = "character") {
-  conv_fn <- ifelse(type == "numeric", as.numeric, as.character)
+read_to_matrix <- function(path = "./input.txt", as_nums = FALSE) {
+  conv_fn <- ifelse(as_nums, as.numeric, as.character)
   read_lines(path) %>%
     mutate(lines = lapply(lines, split_full)) %>%
     pull(lines) %>%
     do.call(rbind, .) %>%
     apply(2, conv_fn)
 }
+
+################################################################################
+############################### MATRIX FUNCTIONS ###############################
+################################################################################
 
 matget <- function(M, r, c, default = 0) {
   height <- nrow(M)
@@ -40,6 +47,19 @@ matassign <- function(M, r, c, val) {
     M
   }
 }
+
+get_coords <- function(mat, n) {
+  width <- dim(mat)[2]
+  pos <- which(mat == n)
+  row <- clamp_mod(pos, width)
+  col <- ((pos-1) %/% width) + 1
+  coords <- data.frame(row, col)
+  coords
+}
+
+################################################################################
+############################### STRING FUNCTIONS ###############################
+################################################################################
 
 split_full <- function(s) {
   s <- as.character(s)
@@ -71,14 +91,14 @@ heirarchy_split <- function(s,
   split_lower
 }
 
+################################################################################
+################################ OTHER FUNCTIONS ###############################
+################################################################################
+
 # Clamp modulus values into range 1-> max
 # e.g. clamp_mod(8,6) = 2, clamp_mod(12,6) = 6
 clamp_mod <- function(n, max) {
-  if (n < 1 || n > max) {
-    n <- n %% max
-    if (n == 0) {
-      n <- max
-    }
-  }
+  n <- n %% max
+  n <- n + (n == 0)*max
   n
 }
